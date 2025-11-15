@@ -1,4 +1,4 @@
-# Self Verification Demo (Client + Server)
+![Banner](./banner.png)
 
 Minimal full-stack example showing how to:
 
@@ -107,31 +107,3 @@ NEXT_PUBLIC_SELF_DEBUG_ENDPOINT=http://localhost:3001/debug/last-result
        - `isValidDetails` (overall, age, OFAC)
        - `discloseOutput` (nationality, gender, etc.)
        - `userData` (userIdentifier + userDefinedData).
-
-## Implementation Notes
-
-- Backend (`server/index.mjs`)
-  - Uses `SelfBackendVerifier(scope, endpoint, mockPassport=true, AllIds, DefaultConfigStore, "hex")`.
-  - `DefaultConfigStore` is configured with:
-    - `minimumAge: 18`
-    - `excludedCountries: []`
-    - `ofac: true`
-  - OFAC handling:
-    - If the user is on the OFAC list, the request returns an error with reason `"User is in OFAC sanctions list"`.
-
-- Frontend (`client/src/app/page.tsx`)
-  - Builds a `SelfApp` with:
-    - `endpointType: "staging_https"`
-    - `disclosures` that match backend config (`minimumAge`, `excludedCountries`, `ofac`).
-  - Uses `SelfQRcodeWrapper` to render the QR and handle success/error.
-  - On success, it fetches `/debug/last-result` from the backend and pretty-prints the JSON.
-
-## Cleaning & Structure Changes Made
-
-- Split code into clear `client/` and `server/` folders.
-- Simplified the backend folder so it only contains:
-  - `index.mjs` (no nested `server/` dir).
-  - `package.json`, `.env`, `node_modules`.
-- Removed Next.js boilerplate images and landing content.
-- Reduced global CSS to a light theme only with minimal styling.
-- Replaced per-folder READMEs with this single root `README.md`.
